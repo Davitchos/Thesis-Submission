@@ -1,0 +1,108 @@
+algorithm_configs:
+  ppo:
+    policy: CustomActorCriticPolicy
+    learning_rate: 0.0001
+    learning_rate_schedule: constant
+    n_rollout_steps: 8
+    gamma: 1.0
+    full_batch_updates: true
+    gae_lambda: 0.95
+    clip_range: 0.2
+    normalize_rewards: false
+    translate_action_spaces_for_agents: None
+    translate_observation_spaces_for_agents: None
+    action_space_translator: identity
+    observation_space_translator: identity
+rl_envs:
+  name: switching_costs
+  num_agents: 2
+  num_groups: 1
+  transportation_cost:
+  - 0.25
+  membership_benefit:
+  - 0.09
+  costs:
+  - - 0.5
+  - - 0.5
+  batch_size: 256
+  sample_size: 3000
+  min_price: 0.0
+  max_price: 2.0
+  stochastic_demand: true
+  drop_out: false
+  drop_out_levels:
+  - 0.1
+  - 0.1
+  public_prices: false
+  num_stages: 2
+  baysian_costs: false
+  complete_information: false
+  reverse_action_space: false
+  project_demand: true
+  risk_aversion: false
+  cara_risk_aversion: 0.5
+  costs_low:
+  - 0.2
+  costs_high:
+  - 0.8
+  switching_cost:
+  - 0.09
+  membership_mode: SH
+  initial_base:
+  - - 0.5
+  - - 0.5
+  retention: 0.5
+  seed: 0
+policy:
+  net_arch:
+    pi:
+    - 64
+    - 64
+    vf:
+    - 64
+    - 64
+  activation_fn: nn.SELU
+  action_activation_fn: None
+  action_dependent_std: false
+  log_std_init: -3.0
+  min_std: 0.0
+  ent_coef: 0.0
+space_translators:
+  box_to_discrete_granularity: 32
+  box_to_discrete_maximum_width: 2.0
+verifier:
+  num_simulations: 16
+  action_discretization: 100
+  obs_discretization: 20
+  batch_size: 32
+  device: null
+valid_envs:
+- rockpaperscissors
+- sequential_auction
+- signaling_contest
+- bertrand_competition
+- simple_soccer
+- coin_game
+- platform_competition
+log_path: ./logs/convergence
+experiment_log_path: ./logs/convergence/0013/
+experiment_name: ''
+readable_experiment_name: true
+delete_logs_after_training: false
+device: cuda:0
+seed: 0
+num_envs: 2048
+iteration_num: 2000
+n_steps_per_iteration: 8
+total_training_steps: 32768000
+train_log_freq: 1
+n_eval_episodes: 5
+eval_freq: 100
+verify_br: true
+algorithms:
+- ppo
+policy_sharing: false
+store_learner: false
+store_freq: null
+load_learner: false
+paths_to_stored_learners: []
